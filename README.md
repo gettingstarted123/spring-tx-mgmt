@@ -30,7 +30,10 @@ create user 'tx_user'@'localhost'  identified by 'tx_user';
 Finally grant the created user with privieleges to the schema :
 GRANT ALL PRIVILEGES ON tx_mgmt.* TO tx_user@localhost
 
-Once connected 
+##### @2.4 Creating the table in the schema:
+CREATE TABLE tx_user( user_id INT PRIMARY KEY, first_name VARCHAR(255) , last_name VARCHAR(255));
+
+
 # Problems faced
 ### @1 Failure at application startup : 'error creating bean with name 'data source' defined in class path resource'
 This error occurs because database configuration is not present.
