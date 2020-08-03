@@ -19,10 +19,14 @@ public class UserController {
 	@PostMapping(path="/create")	
 	public ResponseEntity<?> createUser(@RequestBody UserDto userDto) {
 		final String METHOD_NAME = "createUser";	
-		
+		System.out.println(userDto);
 		try {	
-			userService.save(null);
-			return ResponseEntity.status(200).body("done");
+			if(userService.save(userDto)) {
+				return ResponseEntity.status(200).body("done");
+			}else {
+				return ResponseEntity.status(500).body("error");
+			}
+			
 		}catch(Exception e) {
 			/** this will catch any unexpected exceptions and also if DAO throws SQLException which will come as a runtime exception **/
 			return ResponseEntity.status(500).body(e.getMessage());

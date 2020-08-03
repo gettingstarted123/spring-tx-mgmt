@@ -24,7 +24,7 @@ create database tx_mgmt;
 Then to use the schema use the below command:
 USE tx_mgmt;
 
-Then create a database user with below command:
+Then create a database user and password with below command:
 create user 'tx_user'@'localhost'  identified by 'tx_user';
 
 Finally grant the created user with privieleges to the schema :
