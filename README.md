@@ -53,5 +53,45 @@ For now this will allow your code to startup successfully
 ### how do we define a context-root for a spring boot application ?
 
 # Learnings / Answers 
+### @1 Configuring Hikari datasource in spring boot 2
+We first defined the necessary properties required to connect to database.
+
+Next step is to define a class with @Configuration 
+Then write a method that returns a Datasource 
+This method is annotated with : @Bean and @ConfigurationProperties 
+
+Here we specify what properties spring boot to read by specifying :  @ConfigurationProperties("spring.datasource")
+
+So spring boot will read properties beginning with spring.datasource 
+Ex:
+spring.datasource.jdbc-url=jdbc:mysql://127.0.0.1:3306/tx_mgmt?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+
+Then we create a DataSource using spring's 'DataSourceBuilder':
+DataSourceBuilder.create().build()
+
+So this is how we expose a Datasource created by reading properties defined in application.properties 
+Since the method is annotated with @Bean , this datasource is now spring managed 
+
+### @2 Injecting datasource in DAO
+Since the datasource is annotated with @Bean , it is a spring managed bean .
+As a result we can inject ( autowire ) it in classes that are annotated with stereo types 
+
+So this is how we inject the datasource in Dao class ( @Repository annotated class ) 
+@Repository
+public class UserDao {
+	
+	private DataSource dataSource;
+	
+	@Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+    
+# Conclusion / Takeaway 
+### @1 This branch is an example of plain old jdbc Tx mgmt 
+Here we use plain old JDBC Tx Mgmt 
+From the datasource we obtain a java.sql.Connection 
+We then use the traditional way of doing Tx mgmt.
+
 
 
